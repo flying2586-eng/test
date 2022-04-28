@@ -23,7 +23,7 @@ int main()
     //VideoCapture cap(0);
 	VideoCapture cap;
 	//cap.open("E:\\photo\\03\\test.avi");
-    cap.open("E:\\photo\\Videos\\run\\daria_run.avi");
+    cap.open("E:\\photo\\20200319_Trim.avi");
 	if (!cap.isOpened())
 		return -1;
  
@@ -44,15 +44,15 @@ int main()
 			calcOpticalFlowFarneback(prevgray, gray, uflow, 0.5, 3, 15, 3, 5, 1.1, OPTFLOW_FARNEBACK_GAUSSIAN);
 			//cvtColor(prevgray, cflow, COLOR_GRAY2BGR);
 			uflow.copyTo(flow);
-			drawOptFlowMap(flow, preframe, 14, 1.5, Scalar(0, 255, 0));
+			drawOptFlowMap(flow, preframe, 16, 1.5, Scalar(0, 255, 0));
 			imshow("flow", preframe);
             stringstream str;
-            str<<"E:\\photo\\03\\05\\"<<i<<".jpg";
+            str<<"E:\\photo\\03\\06\\"<<i<<".png";
             cout<<str.str()<<endl;
             imwrite(str.str(),preframe);
             i++;
 		}
-		if (waitKey(600) >= 0)
+		if (waitKey(10) >= 0)
 			break;
 		std::swap(prevgray, gray);
 		std::swap(preframe, frame);
