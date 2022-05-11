@@ -12,8 +12,7 @@ static void drawOptFlowMap(const Mat& flow, Mat& cflowmap, int step,
 		for (int x = 0; x < cflowmap.cols; x += step)
 		{
 			const Point2f& fxy = flow.at<Point2f>(y, x);
-			line(cflowmap, Point(x, y), Point(cvRound(x + fxy.x), cvRound(y + fxy.y)),
-				color);
+			line(cflowmap, Point(x, y), Point(cvRound(x + fxy.x), cvRound(y + fxy.y)),color);
 			circle(cflowmap, Point(x, y), 2, color, -1);
 		}
 }
@@ -29,7 +28,8 @@ int main()
  
 	Mat flow, cflow, frame, preframe;
 	//Mat gray, prevgray, uflow;
-	UMat gray, prevgray, uflow;
+	//从UMat修改为Mat
+	Mat gray, prevgray, uflow;
 	namedWindow("flow", 0);
     int i=0;
  
@@ -37,25 +37,31 @@ int main()
 	{
 		//cap >> frame;
 		bool ret = cap.read(frame);
+		frame=frame(Rect(243,0,1252,610));
 		cvtColor(frame, gray, COLOR_BGR2GRAY);
- 
+		blur(gray,gray,Size(7,7));
+		adaptiveThreshold(gray,gray,255,ADAPTIVE_THRESH_MEAN_C,THRESH_BINARY,5,3);
 		if (!prevgray.empty())
 		{
 			calcOpticalFlowFarneback(prevgray, gray, uflow, 0.5, 3, 15, 3, 5, 1.1, OPTFLOW_FARNEBACK_GAUSSIAN);
 			//cvtColor(prevgray, cflow, COLOR_GRAY2BGR);
 			uflow.copyTo(flow);
-			drawOptFlowMap(flow, preframe, 16, 1.5, Scalar(0, 255, 0));
+			// cvtColor(preframe,preframe,CV_GRAY2RGB);
+			drawOptFlowMap(flow, preframe, 16, 1.5, Scalar(0,0,255));
+		
 			imshow("flow", preframe);
-            stringstream str;
-            str<<"E:\\photo\\03\\06\\"<<i<<".png";
+		
+            /* stringstream str;
+            str<<"E:\\photo\\03\\08\\"<<i<<".png";
             cout<<str.str()<<endl;
             imwrite(str.str(),preframe);
-            i++;
+            i++; */
 		}
 		if (waitKey(10) >= 0)
 			break;
 		std::swap(prevgray, gray);
 		std::swap(preframe, frame);
+		// std::swap(preframe, gray);
 	}
 	return 0;
 
