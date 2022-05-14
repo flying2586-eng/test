@@ -26,7 +26,7 @@ void on_Trackbar(int,void*)
 
 int main()
 {
-    image = imread("E:\\photo\\03\\07\\0.jpg");
+    image = imread("E:\\photo\\Videos\\run\\lyova_run\\0.jpg");
     namedWindow("原图",0);
     imshow("原图",image);
     cout<<"原图行: "<<image.rows<<endl;

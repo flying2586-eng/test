@@ -39,8 +39,10 @@ int main()
 		bool ret = cap.read(frame);
 		frame=frame(Rect(243,0,1252,610));
 		cvtColor(frame, gray, COLOR_BGR2GRAY);
-		blur(gray,gray,Size(7,7));
-		adaptiveThreshold(gray,gray,255,ADAPTIVE_THRESH_MEAN_C,THRESH_BINARY,5,3);
+		// blur(gray,gray,Size(7,7));
+		// adaptiveThreshold(gray,gray,255,ADAPTIVE_THRESH_MEAN_C,THRESH_BINARY,5,3);
+		namedWindow("a",0);
+		imshow("a",gray);
 		if (!prevgray.empty())
 		{
 			calcOpticalFlowFarneback(prevgray, gray, uflow, 0.5, 3, 15, 3, 5, 1.1, OPTFLOW_FARNEBACK_GAUSSIAN);
@@ -57,7 +59,7 @@ int main()
             imwrite(str.str(),preframe);
             i++; */
 		}
-		if (waitKey(10) >= 0)
+		if (waitKey(500) >= 0)
 			break;
 		std::swap(prevgray, gray);
 		std::swap(preframe, frame);

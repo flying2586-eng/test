@@ -1,3 +1,5 @@
+//自适应二值化
+
 #include<opencv2/opencv.hpp>
 #include<iostream>
 
@@ -17,19 +19,19 @@ int main()
     cvtColor(imageROI,imageROI,CV_BGR2GRAY);
     namedWindow("gray",0);
     imshow("gray",imageROI);
-    stringstream str1;
+  /*   stringstream str1;
     str1<<"E:\\photo\\03\\08\\01\\"<<i<<".png";
     cout<<str1.str()<<endl;
-    imwrite(str1.str(),imageROI);
+    imwrite(str1.str(),imageROI); */
 
     Mat imageROI_1;
     adaptiveThreshold(imageROI,imageROI_1,255,ADAPTIVE_THRESH_MEAN_C,THRESH_BINARY,5,3);
     // threshold(imageROI,imageROI,90,255,THRESH_BINARY);
-    stringstream str2;
+    /* stringstream str2;
     str2<<"E:\\photo\\03\\08\\02\\"<<i<<".png";
     cout<<str2.str()<<endl;
     imwrite(str2.str(),imageROI_1);
-    i++;
+    i++; */
 
     namedWindow("结果",0);
     imshow("结果",imageROI_1);
