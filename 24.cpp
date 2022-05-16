@@ -7,7 +7,7 @@
 using namespace cv;
 using namespace std;
  
-vector<string> trackerTypes = { "BOOSTING", "MIL", "KCF", "TLD", "MEDIANFLOW", "MOSSE", "CSRT" };
+vector<string> trackerTypes = { "BOOSTING", "MIL", "KCF", "TLD", "MEDIANFLOW", "MOSSE", "CSRT" };//KCF最佳
  
 /**
  * @brief Create a Tracker By Name object 根据设定的类型初始化跟踪器
@@ -35,12 +35,12 @@ Ptr<Tracker> createTrackerByName(string trackerType)
 	return tracker;
 }
  
-void getRandomColors(vector<Scalar> &colors, int numColors)
+void getRandomColors(vector<Scalar> &colors, int numColors)//随机获取一种颜色
 {
-	RNG rng(0);
+	RNG rng(0);//创造随机数
 	for (int i = 0; i < numColors; i++)
 	{
-		colors.push_back(Scalar(rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255)));
+		colors.push_back(Scalar(rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255)));//RNG::uniform(a, b ) 返回一个[a,b)范围的均匀分布的随机数，a,b的数据类型要一致，而且必须是int、float、double中的一种，默认是int。
 	}
 }
  
@@ -56,7 +56,7 @@ int main()
  
 	while (true)
 	{
-		vecPoint.clear();
+		vecPoint.clear();//删除储存在vector容器中的所有元素
  
 		while (true)
 		{
@@ -223,7 +223,7 @@ int main()
 				"\n | 播放期间按q退出播放        |"
 				"\n +----------------------------+\n";
  
-			video >> frame;
+			video >> frame;		//获取视频帧
 			//! [getframe]
  
 			while (1)
@@ -243,8 +243,10 @@ int main()
 			cv::destroyWindow("Tracker");
 			//end added
  
+			//从此处开始
+			
 			//! [selectroi]选择目标roi以GUI的形式
-			cv::selectROIs("tracker", frame, rois, false);
+			cv::selectROIs("tracker", frame, rois, false);			//选择目标区域
 			//! [selectroi]
  
 			if (rois.size() < 1)
@@ -255,11 +257,16 @@ int main()
 			vector<Scalar> colors;
 			getRandomColors(colors, rois.size());
  
-			Ptr<MultiTracker> multiTracker = MultiTracker::create();
+			Ptr<MultiTracker> multiTracker = MultiTracker::create();			//create() static类型，返回一个指向MultiTracker新的实例的指针。
  
 			for (int i = 0; i < rois.size(); i++)
 			{
 				multiTracker->add(createTrackerByName(trackerType), frame, Rect2d(rois[i]));
+				//bool cv::MultiTracker::add ( Ptr< Tracker >  newTracker, InputArray  image,  const Rect2d &  boundingBox )
+				//newTracker          //使用的跟踪算法
+				//image               //当前图像
+				//boundingBox         //框选的跟踪对象
+				//添加一个新的跟踪对象
  
 				vector<Point> temp;
 				vecPoint.push_back(temp);
@@ -278,7 +285,7 @@ int main()
  
 				// update the tracking result
 				//! [update]
-				bool ok = multiTracker->update(frame);
+				bool ok = multiTracker->update(frame);				//更新当前跟踪状态，并保存到内部存储器中
 				//! [update]
  
 				//! [visualization]
@@ -287,6 +294,15 @@ int main()
 				{
 					rectangle(frame, multiTracker->getObjects()[i], colors[i], 2, 1);
 				}
+				//
+				
+				/* void cv::rectangle	(	Mat & 	img,
+				Rect 	rec,
+				const Scalar & 	color,
+				int 	thickness = 1,
+				int 	lineType = LINE_8,
+				int 	shift = 0 
+				)	 */
 				//! [visualization]
  
 				for (int i = 0; i < multiTracker->getObjects().size(); i++)
