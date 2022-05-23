@@ -1,3 +1,5 @@
+//自己写的追踪
+
 #include <iostream>
 #include <opencv2/opencv.hpp>
 #include <opencv2/tracking.hpp>
@@ -28,7 +30,7 @@ int main()
     while(true)
     {
         vecPoint.clear();
-        VideoCapture video("E:\\photo\\20200319_Trim.avi");
+        VideoCapture video("E:\\photo\\02.avi");
         if(!video.isOpened())
         {
             cout<<"\n>> 读取视频失败";

@@ -1,13 +1,15 @@
 #include<opencv2/opencv.hpp>
 #include<opencv2/highgui.hpp>
 #include<opencv2/xfeatures2d/nonfree.hpp>
+#include<math.h>
 using namespace cv;
-
+using namespace std;
 int main()
 {
-    Mat img=imread("E:/photo/93a7b4064c30eb6ec86374d07440939e.png");
-    namedWindow("测试",0);
-    imshow("测试",img);
-    waitKey(0);
+   int a=-1;
+   int b=fabs(a);
+   cout<<a<<endl;
+   cout<<b<<endl;
+    system("pause");
     return 0;
 }

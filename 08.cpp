@@ -8,14 +8,15 @@ using namespace cv;
 
 int main()
 {
-    VideoCapture cap("E:\\photo\\Videos\\run\\lyova_run.avi");
+    VideoCapture cap("E:\\photo\\20200319_Trim.avi");
     Mat frame;
     int i=0;
     while(cap.read(frame))
     {
         // frame=frame(Rect(500,0,1500,500));
+        frame=frame(Rect(243,0,1252,610));
         stringstream str;
-        str<<"E:\\photo\\Videos\\run\\lyova_run\\"<<i<<".jpg";
+        str<<"E:\\photo\\03\\08\\001\\"<<i<<".png";
         cout<<str.str()<<endl;
         imwrite(str.str(),frame);
         i++;

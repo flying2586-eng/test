@@ -35,7 +35,7 @@ int main()
 
     namedWindow("结果",0);
     imshow("结果",imageROI_1);
-    waitKey(10);
+    waitKey(800);
     }
     return 0;
 }

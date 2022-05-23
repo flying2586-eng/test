@@ -37,7 +37,11 @@ int main(int argc, char** argv)
 			k == numCluster - 1 ? 
 			sampleCount: (k + 1)*sampleCount / numCluster); //定义随机散点
 		//rng.fill函数，会以center点为中心，产生高斯分布的随机点(位置点），并把位置点保存在矩阵pointChunk中。
-		rng.fill(pointChunk, RNG::NORMAL, Scalar(center.x, center.y), Scalar(img.cols*0.05, img.rows*0.05));
+		rng.fill(pointChunk, RNG::NORMAL, Scalar(center.x, center.y), Scalar(img.cols*0.05, img.rows*0.05));//RNG::NORMAL 高斯分布  Scalar(x,y)创建一个二通道，且每个通道的值都为(x,y)
+        /* mat：用于存放随机数的矩阵，目前只支持低于5通道的矩阵。
+        distType：随机数分布形式选择标志，目前生成的随机数支持均匀分布（RNG::UNIFORM，0）和高斯分布（RNG::NORMAL，1）。
+        a：确定分布规律的参数。当选择均匀分布时，该参数表示均匀分布的最小下限；当选择高斯分布时，该参数表示高斯分布的均值。
+        b：确定分布规律的参数。当选择均匀分布时，该参数表示均匀分布的最大上限；当选择高斯分布时，该参数表示高斯分布的标准差。 */
 	}
 	/*
 	rowRange(int x, int y):
@@ -67,7 +71,8 @@ int main(int argc, char** argv)
 	{
 		int x = centers.at<float>(i, 0);
 		int y = centers.at<float>(i, 1);
-		circle(img, Point(x, y), 50, colorTab[i], 2, 8, 0);
+		// circle(img, Point(x, y), 50, colorTab[i], 2, 8, 0);
+        rectangle(img,Point(x-50,y-50),Point(x+50,y+50),colorTab[i],2,8);
 
 	}
 	imshow("result", img);

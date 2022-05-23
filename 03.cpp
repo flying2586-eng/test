@@ -70,7 +70,7 @@ void KLTrackFeature()
 void test()
 {
 
-	VideoCapture capture(0);
+	VideoCapture capture("E:\\photo\\20200319_Trim.avi");
 	//VideoCapture capture(0);  //打开摄像头
 	if (!capture.isOpened())
 	{
@@ -81,6 +81,9 @@ void test()
 
 	while (capture.read(frame))
 	{
+		frame=frame(Rect(243,0,1252,610));//ROI区域
+
+
 		resize(frame, frame, Size(540, 480), 0, 0, INTER_CUBIC);
 		cvtColor(frame, grayImg, COLOR_BGR2GRAY);
 
