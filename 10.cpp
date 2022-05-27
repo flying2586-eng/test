@@ -8,8 +8,8 @@ using namespace std;
 using namespace cv::xfeatures2d;
 int main()
 {
-    Mat src=imread("E:\\photo\\03\\45.jpg",IMREAD_COLOR);
-    Mat temp=imread("E:\\photo\\03\\46.jpg",IMREAD_COLOR);
+    Mat src=imread("E:\\photo\\03\\08\\02\\2.png",IMREAD_COLOR);
+    Mat temp=imread("E:\\photo\\03\\08\\02\\4.png",IMREAD_COLOR);
     namedWindow("1",0);
     imshow("1",src);
     namedWindow("2",0);
