@@ -15,7 +15,8 @@ bool ascendSort(vector<Point> a, vector<Point> b) {
 
 int main()
 {
-    Mat a=imread("E:\\photo\\03\\08\\02\\3.png");
+    Mat a=imread("E:\\photo\\03\\08\\02\\19.png");
+    namedWindow("src",0);
     imshow("src",a);
     Mat a_cannyMat_output;
     Canny(a,a_cannyMat_output,150,100,3);
@@ -32,22 +33,36 @@ int main()
     
     while(itc!=g_vContours.end())
     {
-        Rect rect=boundingRect(*itc);
-        int x=rect.x;
-        int y=rect.y;
-        int w=rect.width;
-        int h=rect.height;
+        // Rect rect=boundingRect(*itc);
+       RotatedRect rect=minAreaRect(*itc);
+       Point2f vertex[4];
+       rect.points(vertex);
+        
+        // int x=rect.x;
+        // int y=rect.y;
+        // int w=rect.width;
+        // int h=rect.height;
         // cout<<x<<" "<<y<<" "<<w<<" "<<h<<endl;
+        
 
-        if(itc->size()<20)                                     //将小于100的区域设置为全白
+        // if(itc->size()<18)                                     //将小于100的区域设置为全白
+        // {
+        //     tempV.push_back(Point(x,y));
+        //     tempV.push_back(Point(x, y+h));
+		// 	tempV.push_back(Point(x+w, y+h));
+		// 	tempV.push_back(Point(x+w, y));
+        //     contours2.push_back(tempV);
+        //     cv::drawContours(a,contours2,-1,Scalar(255,255,255),CV_FILLED);
+
+        // }
+        if(itc->size()<40)
         {
-            tempV.push_back(Point(x,y));
-            tempV.push_back(Point(x, y+h));
-			tempV.push_back(Point(x+w, y+h));
-			tempV.push_back(Point(x+w, y));
+            tempV.push_back(vertex[0]);
+            tempV.push_back(vertex[1]);
+            tempV.push_back(vertex[2]);
+            tempV.push_back(vertex[3]);
             contours2.push_back(tempV);
             cv::drawContours(a,contours2,-1,Scalar(255,255,255),CV_FILLED);
-
         }
         tempV.clear();
         ++itc;

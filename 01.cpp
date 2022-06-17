@@ -6,10 +6,9 @@ using namespace cv;
 using namespace std;
 int main()
 {
-   int a=-1;
-   int b=fabs(a);
-   cout<<a<<endl;
-   cout<<b<<endl;
-    system("pause");
-    return 0;
+   Mat a=imread("E:\\photo\\03\\08\\001\\0.png");
+   a=a(Rect(243,0,1252,310));
+   imshow("",a);
+   waitKey(0);
+   return 0;
 }

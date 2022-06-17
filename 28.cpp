@@ -44,7 +44,7 @@ int main()
 	//从UMat修改为Mat
 	Mat gray, prevgray, uflow;
 	namedWindow("flow", 0);
-    int i=0;
+    
  
 	for (;;)
 	{
@@ -72,10 +72,11 @@ int main()
 
             string NEWfilename = "E:\\photo\\03\\08\\05\\"+to_string(iiii)+".csv";
 			string NEWfilename_2 = "E:\\photo\\03\\08\\06\\"+to_string(iiii)+".csv";
-			string NEWfilename_3 = "E:\\photo\\03\\08\\07\\"+to_string(iiii)+".csv";
+			string NEWfilename_3 = "E:\\photo\\03\\08\\08\\"+to_string(iiii)+".csv";
             // ofstream file(NEWfilename,ios::out);
 			// ofstream file_2(NEWfilename_2,ios::out);
             ofstream file_3(NEWfilename_3,ios::out);
+			file_3<<"x"<<","<<"y"<<","<<"longmodel"<<","<<"angleflow"<<endl;
             for(int row=0;row<flow.rows;row++)
             {
                 for(int col=0;col<flow.cols;col++)
@@ -86,6 +87,8 @@ int main()
                     // string bb="";
 
                     // file <<flow.at<Point2f>(row,col).x<<"."<<flow.at<Point2f>(row,col).y<<',';
+					// fprintf(out,"%s,%s,%s","x","y","m");
+					
 					const Point2f& fxy=flow.at<Point2f>(row,col);
 					// float a,b;
 					// {
@@ -98,15 +101,29 @@ int main()
 					// 	else
 					// 	b=fxy.y;
 					// }
-					// file<<"x"<<','<<a<<','<<"y"<<','<<b<<',';
+					// file<<"x"<<','<<a<<','<<"y"<<','<<b<<',';			
 
-					// file<<fxy<<',';
+					// file<<fxy<<',';										//输出每一个点的x和y的位移量
 
 					// float longmodel=sqrt(fxy.x*fxy.x+fxy.y*fxy.y);
 					// if(longmodel<0.01)
 					// 	longmodel=0;
-					// file_2<<longmodel<<',';
+					// file_2<<longmodel<<',';								//输出每一个点的位移大小
 					
+					// float a,b;
+					// {
+					// if(fabs(fxy.x)<0.01)
+					// 	a=0;
+					// else
+					// 	a=fxy.x;
+					// if(fabs(fxy.y)<0.01)
+					// 	b=0;
+					// else
+					// 	b=0-fxy.y;
+					// }
+					// float angleflow=atan2(b,a);
+					// float angleflow_2=angleflow*180/3.14159;
+					// file_3<<angleflow_2<<',';								//输出每一个点的位移方向
 					float a,b;
 					{
 					if(fabs(fxy.x)<0.01)
@@ -120,9 +137,8 @@ int main()
 					}
 					float angleflow=atan2(b,a);
 					float angleflow_2=angleflow*180/3.14159;
-					file_3<<angleflow_2<<',';
-
-
+					float longmodel=sqrt(a*a+b*b);
+					file_3<<row<<","<<col<<","<<longmodel<<","<<angleflow_2<<endl;
 
 
 
