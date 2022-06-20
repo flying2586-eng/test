@@ -46,6 +46,7 @@ int main()
         }
         vector<Scalar>colors;
         getRandomColors(colors,rois.size());
+        // cout<<rois.size()<<endl;
 
         Ptr<MultiTracker>multiTracker=MultiTracker::create();
         for(int i=0;i<rois.size();i++)

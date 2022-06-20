@@ -48,6 +48,7 @@ static void drawmeans(const Mat& flow, Mat& cflowmap)
 	imshow("a",flow);
 
 }
+static int i=0;
 void drawflow(Mat& flow)
 {
 	Mat a(flow.rows,flow.cols,CV_8UC3);
@@ -58,7 +59,7 @@ void drawflow(Mat& flow)
 		{
 			
 			const Point2f& fxy = flow.at<Point2f>(y, x);
-			if(sqrt(fxy.x*fxy.x+fxy.y*fxy.y)>8)
+			if(sqrt(fxy.x*fxy.x+fxy.y*fxy.y)>1)
 			{
 				a.at<Vec3b>(y,x)=Vec3b(0,0,255);
 			}
@@ -66,6 +67,16 @@ void drawflow(Mat& flow)
 			// cout<<fxy;
 		}
 		imshow("b",a);
+		
+		
+			stringstream str;
+            str<<"E:\\photo\\03\\08\\09\\"<<i<<".png";
+            cout<<str.str()<<endl;
+            imwrite(str.str(),a);
+            i++;
+		
+		
+
 
 }
 
@@ -74,7 +85,7 @@ int main()
     //VideoCapture cap(0);
 	VideoCapture cap;
 	//cap.open("E:\\photo\\03\\test.avi");
-    cap.open("E:\\photo\\20200319_Trim.avi");
+    cap.open("E:\\photo\\02.avi");
 	if (!cap.isOpened())
 		return -1;
  
@@ -83,13 +94,14 @@ int main()
 	//从UMat修改为Mat
 	Mat gray, prevgray, uflow;
 	namedWindow("flow", 0);
-    int i=0;
+    // int i=0;
  
 	for (;;)
 	{
 		//cap >> frame;
 		bool ret = cap.read(frame);
-		frame=frame(Rect(243,0,1252,610));
+		// frame=frame(Rect(243,0,1252,610));		//原先区域设置
+		frame=frame(Rect(243,0,1252,310));
 		cvtColor(frame, gray, COLOR_BGR2GRAY);
 		
 		adaptiveThreshold(gray,gray,255,ADAPTIVE_THRESH_MEAN_C,THRESH_BINARY,5,3);
@@ -105,6 +117,7 @@ int main()
 
 			// drawmeans(preframe,flow);
 			drawflow(flow);
+			
 			drawOptFlowMap(flow, preframe, 16, 1.5, Scalar(0,0,255));
 		
 			imshow("flow", preframe);
@@ -116,7 +129,7 @@ int main()
             imwrite(str.str(),preframe);
             i++; */
 		}
-		if (waitKey(800) >= 0)
+		if (waitKey(10) >= 0)
 			break;
 		std::swap(prevgray, gray);
 		std::swap(preframe, frame);
